@@ -4,15 +4,15 @@ using namespace std;
 
 
 unordered_map<char, vector<int>> Snake::DIRECTIONS {
-    {'h', {0 -1}},
+    {'h', {0, -1}},
     {'j', {1, 0}},
     {'k', {-1, 0}},
     {'l', {0, 1}}
 };
 
-Snake::Snake(unsigned x, unsigned y):
+Snake::Snake(unsigned x, unsigned y, char direction):
     m_score(0),
-    m_direction('.')
+    m_direction(direction)
 {
     m_coordinates.push_back({x, y});
     m_lookup[x].insert(y);

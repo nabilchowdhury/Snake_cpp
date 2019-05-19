@@ -28,8 +28,8 @@ unsigned Board::maxHeight()const {
 }
 
 pair<unsigned, unsigned> Board::generateFood() {
-    unsigned x = rand() % (maxHeight() - 1) + 1;
-    unsigned y = rand() % (maxWidth() - 1) + 1;
+    unsigned x = rand() % (maxHeight() - 2) + 1;
+    unsigned y = rand() % (maxWidth() - 2) + 1;
     m_food = {x, y};
     return m_food;
 }
@@ -55,33 +55,32 @@ void Board::display() {
 }
 
 SnakeStatus Board::moveSnake(char direction) {
-    int dx = Snake::DIRECTIONS[direction][0];
-    int dy = Snake::DIRECTIONS[direction][1];
-
-    // Check if move is valid. If not, correct dx, dy
+    // Initialize to previous direction
     char prevDirection = m_snake.getDirection();
+    int dx = Snake::DIRECTIONS[prevDirection][0];
+    int dy = Snake::DIRECTIONS[prevDirection][1];
+        
+    // Check if move is valid i.e. snake doesn't try to move in opposite direction. Else, set to new direction.
     if (direction == 'h' && prevDirection == 'l') {
-        dx = Snake::DIRECTIONS['l'][0];
-        dy = Snake::DIRECTIONS['l'][1];
     } else if (direction == 'l' && prevDirection == 'h') {
-        dx = Snake::DIRECTIONS['h'][0];
-        dy = Snake::DIRECTIONS['h'][1];
     } else if (direction == 'j' && prevDirection == 'k') {
-        dx = Snake::DIRECTIONS['k'][0];
-        dy = Snake::DIRECTIONS['k'][1];
     } else if (direction == 'k' && prevDirection == 'j') {
-        dx = Snake::DIRECTIONS['j'][0];
-        dy = Snake::DIRECTIONS['j'][1];
+    } else if (direction == prevDirection) {
+    } else if (Snake::DIRECTIONS.find(direction) == Snake::DIRECTIONS.end()) {
+    } else {
+        dx = Snake::DIRECTIONS[direction][0];
+        dy = Snake::DIRECTIONS[direction][1];
+        m_snake.setDirection(direction);
     }
 
     auto curPos = m_snake.getCurrentPosition();
     unsigned newX = curPos.first + dx;
     unsigned newY = curPos.second + dy;
 
-    if (newX <= 0) newX = maxHeight() - 1;
-    else if (newX >= maxHeight() - 1) newX = 0;
-    if (newY <= 0) newY = maxWidth() - 1;
-    else if (newY >= maxWidth() - 1) newY = 0;
+    if (newX <= 0) newX = maxHeight() - 2;
+    else if (newX >= maxHeight() - 1) newX = 1;
+    if (newY <= 0) newY = maxWidth() - 2;
+    else if (newY >= maxWidth() - 1) newY = 1;
 
     bool grow = false;
 
@@ -90,7 +89,6 @@ SnakeStatus Board::moveSnake(char direction) {
         generateFood();
     }
     
-    m_snake.setDirection(direction);
     return m_snake.moveSnake(newX, newY, grow);
 }
 

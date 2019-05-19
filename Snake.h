@@ -9,7 +9,8 @@ using namespace std;
 
 enum class SnakeStatus {
     ISOK,
-    DEAD
+    DEAD,
+    INIT
 };
 
 class Snake {
@@ -24,7 +25,7 @@ private:
 
 public:
     Snake() = delete;
-    explicit Snake(unsigned x, unsigned y);
+    explicit Snake(unsigned x, unsigned y, char direction);
     SnakeStatus moveSnake(unsigned x, unsigned y, bool grow=false);
     void resetSnake(unsigned length);
     unsigned getScore() const;
