@@ -1,5 +1,5 @@
 #ifndef _BOARD_H
-#define _BOARD_h
+#define _BOARD_H
 #include "Snake.h"
 
 class Board {
