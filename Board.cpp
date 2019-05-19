@@ -55,8 +55,6 @@ void Board::display() {
 }
 
 SnakeStatus Board::moveSnake(char direction) {
-    direction = tolower(direction);
-
     // Initialize to previous direction
     char prevDirection = m_snake.getDirection();
     int dx = Snake::DIRECTIONS[prevDirection][0];

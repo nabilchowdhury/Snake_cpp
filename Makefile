@@ -1,9 +1,13 @@
 CC=g++
 CFLAGS=-fno-rtti
 CXXFLAGS=-Wall
-SRCS=Main.cpp Snake.cpp Board.cpp
+DEPS = Snake.h Board.h
 LIBS=-lncurses
+OBJ=Snake.o Board.o
 
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS) $(CXXFLAGS)
 
-snake: Main.cpp Snake.cpp Board.cpp
-	$(CC) -o bin/snake $(SRCS) $(LIBS)
+all: Main.cpp $(OBJ)
+	$(CC) -o bin/snake $^  $(LIBS) $(CFLAGS) $(CXXFLAGS)
+	

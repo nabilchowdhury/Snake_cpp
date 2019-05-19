@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 
     while (true) {
         if (kbhit()) {
-            ch = (char)getch();
+            ch = tolower((char)getch());
         }
         // Exit Game
         if (ch == 'q') {
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
         }
         refresh();
         board.display();
-        this_thread::sleep_for(milliseconds(200 - snake.getScore()));
+        this_thread::sleep_for(milliseconds(max<unsigned>(150 - snake.getScore(), 20)));
     }
     return 0;
 }
