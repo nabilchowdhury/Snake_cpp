@@ -11,3 +11,7 @@ OBJ=Snake.o Board.o
 all: Main.cpp $(OBJ)
 	$(CC) -o bin/snake $^  $(LIBS) $(CFLAGS) $(CXXFLAGS)
 	
+.PHONY: clean
+
+clean:
+	rm -f *.o bin/*
