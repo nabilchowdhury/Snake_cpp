@@ -9,8 +9,7 @@ using namespace std;
 
 enum class SnakeStatus {
     ISOK,
-    DEAD,
-    INIT
+    DEAD
 };
 
 class Snake {
@@ -19,6 +18,7 @@ public:
 
 private:
     unsigned m_score;
+    unsigned m_size;
     list<pair<unsigned, unsigned>> m_coordinates;
     unordered_map<unsigned, unordered_set<unsigned>> m_lookup;
     char m_direction;
@@ -33,5 +33,6 @@ public:
     bool isSnakeAt(unsigned x, unsigned y);
     void setDirection(char direction);
     char getDirection() const;
+    unsigned getSize() const;
 };
 #endif //_SNAKE_H

@@ -12,7 +12,8 @@ unordered_map<char, vector<int>> Snake::DIRECTIONS {
 
 Snake::Snake(unsigned x, unsigned y, char direction):
     m_score(0),
-    m_direction(direction)
+    m_direction(direction),
+    m_size(1)
 {
     m_coordinates.push_back({x, y});
     m_lookup[x].insert(y);
@@ -31,6 +32,7 @@ SnakeStatus Snake::moveSnake(unsigned x, unsigned y, bool grow) {
     // If there was food at (x, y), grow. Else, remove last coordinate
     if (grow) {
         ++m_score;
+        ++m_size;
     } else {
         auto r = m_coordinates.back();
         m_coordinates.pop_back();
@@ -44,7 +46,14 @@ SnakeStatus Snake::moveSnake(unsigned x, unsigned y, bool grow) {
 
 void Snake::resetSnake(unsigned length) {
     // If snake gets too big, force it to reset
+    for (auto it = next(m_coordinates.begin(), length); it != m_coordinates.end(); ++it) {
+        m_lookup[it->first].erase(it->second);
+        if (m_lookup[it->first].empty()) {
+            m_lookup.erase(it->first);
+        }
+    }
     m_coordinates.resize(length);
+    m_size = length;
 }
 
 unsigned Snake::getScore() const {
@@ -65,4 +74,8 @@ void Snake::setDirection(char direction) {
 
 char Snake::getDirection() const {
     return m_direction;
+}
+
+unsigned Snake::getSize() const {
+    return m_size;
 }

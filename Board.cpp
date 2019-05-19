@@ -87,6 +87,10 @@ SnakeStatus Board::moveSnake(char direction) {
     if (newX == m_food.first && newY == m_food.second) {
         grow = true;
         generateFood();
+        // Max size reached, so we reset the snake
+        if ((maxWidth() - 2) * (maxHeight() * 2) == m_snake.getSize() - 1) {
+            m_snake.resetSnake(4);
+        }
     }
     
     return m_snake.moveSnake(newX, newY, grow);
